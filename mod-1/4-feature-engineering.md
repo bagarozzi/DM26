@@ -96,3 +96,7 @@ An **anomaly score** or classification is produced. Potential errors of these al
 
 A **statistical-based** model for detecting anomalies is based over the assumption of a known distribution of data, on which the anomalies are detected. Points *far away* from the mean (based on some thresholds).
 
+...
+
+The problem with some techniques is the variability in density and distance of outliers (what's an outlier in some places it's not in others). **Local outlier factor** (LOF) uses a ratio to determine if the density of a point is low w.r.t. its neighbor.
+
