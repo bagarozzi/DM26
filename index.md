@@ -5,6 +5,7 @@
 2. [Business understanding](./mod-1/2-business-understanding.md)
 3. [Data preparation](./mod-1/3-data-preparation.md)
 4. [Feature engineering](./mod-1/4-feature-engineering.md)
+5. [Fairness](./mod-1/6-fairness.md)
 
 ## Module 3: Text-mining and NLP (G. Moro)
 1. [Pre-Transformers](./mod-3/1-pre-transformers.md)
