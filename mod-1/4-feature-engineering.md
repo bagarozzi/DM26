@@ -62,7 +62,7 @@ When choosing a model we have to consider the **inductive bias**, when a learnin
 - **Feature concstruction**: combination of multiple features
 - **Learned representation**: features are learned from the algorithm (PCA actually *learns* a feature and applies it)
 
-### Feature transformation
+## Feature transformation
 Feature transformation *operates on the representation of some feature*, these are operations such as: normalization, standardization, scaling, encoding. It changes the distribution, scale or relationship *without creating new information*.
 An example is ***distributional transformation***: changes the distribution when the values are skewed or span orders of magnitude. 
 
@@ -83,17 +83,29 @@ Another example is income and debt. The ratio between income and debt capture th
 - Identify the meaning of each timestamps: distinguish between **event time** (when something happens) and **transaction time** when the event is registered by the system
 - Pay attention on what is available at inference-time: when anaylising data, keep in mind that only some data produced before the inference was available (*predicted time vs. actual time*).
 
+Time-based features can be extracted from TSDB to understand trending and seasonality of the samples; not only the current state.
+
 **Temporal leakage** avoids that data produced *after* the observation is used during training so that nothing is learned from the future, rather the future is used for *validation*.
 
 Temporal feature are **circular**, we must use specific distance equations (e.g. 23:00 to 1:00am). Another way is to use the **sine/cosine distance** where the value is put on a circle and then it can be compared using angular units (rad, deg), given these i can also compute the mean time of some operations.
 
-## Skipped lesson (2/11/26)
+TIme series can represent: level, trend, seasonality, irregular variation.
+The point of a time series is to turn it into a *snapshot features*; by characterizing what's true today based on the past.
 
+To produce **snapshot features** different operations can be done:
+- using *time windows* to detect treding and rates in some periods
+- aggregating throught math ops *average*, *sum*, *rates* (*derivatives*), *moving average*
+- computing regression to extract a trend
 
-## Anomalies
-Temporal feature are **circular**, we must use specific distance equations (e.g. 23:00 to 1:00am). Another way is to use the **sine/cosine distance** where the value is put on a circle and then it can be compared using angular units (rad, deg), given these i can also compute the mean time of some operations.
+### Structural and relational features
+Structural and relational features can be extracted from relationships contained inside samples. This gives a better understanding of degrees of separation, closeness and relations.
 
-## Skipped lesson (2/11/26)
+In many domains, profile do not come simply as singletons but as a network of interconnected samples. Graphs are the best way to represent and analyse them. 
+
+Some interesting features to extract are:
+- Scale
+- Cost
+- Redundancy
 
 ## Anomalies
 Causes of anomalies are usually:
