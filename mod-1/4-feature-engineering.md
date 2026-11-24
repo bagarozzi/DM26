@@ -1,4 +1,57 @@
-# Feature engineering
+# Features (27/10/26) 
+Feature selection: choosing which features to include in the dataset. The choice is based on maximizing performance and generalization for the model.  
+
+We want to remove:
+- irrelevant features: provides no information to the cause
+- redundant: contains information already contained in other feature(s)
+
+Redundant features can also be harmful to the model, distorting distances due to them weighting more in the space.
+
+## Feature selection algorithms
+- filtering algorithm (model-independent)
+- wrapper (model-based): choose features that actually improve the model
+- embedded (during training)
+
+### Filtering
+In **Univariate method filtering**: Apply a statistical scoring function and then apply a threshold. Depending from the target different algorithms can be used: *pearson correlation, ANOVA F-test...
+
+**Multivariate methods** consider the feature itself and its relationship with other features. Checks both relevance and redundancy.
+mRMR tries to both maximize relevance and minimize redundancy by using the *Mutual Information* between couples of features.
+
+### Wrappers (model-based)
+The solution found is related with the model (optimal). The best features are the ones that maximize the cross-validation score in the subset, here come the subset search methods: greedy, stochastic, limited width.
+
+**Sequential Forward Selection** (SFS) is a greedy algorithm. At each iteration, the feature that adds the greatest improvement is added to the set.
+
+**Sequential Backward Elimination** (SBE): start from a fullset of features and removes the worst features.
+
+Both algorithms stop at a fixed number or when there's not enough improvement anymore.
+
+**Best-First Search**: keeps multiple candidate subsets at the same time. It starts from a feature and branches, choosing multiple other features for the subsets. Typically stop when there's no improvement.
+
+### Embedded
+A **Tree-based** approach is useful because only the features that contribute to the fitting of the tree are used. These features are the ones that contribute the most to the *purity* of the tree.
+This method is already integrated within the model, while training.
+
+> Logistic regression is a linear classifier that, instead of predicting, computes the probability of an item to belong to the class
+
+**Lasso** models perform both parameter estimation and feaure selection. For this model, adding a feature can be done only if adding it trades off with the penalty added by its coefficient.
+
+> The **XOR interaction** is a particular problem in feature selection: the algorithms that select only one feature at a time fail to detect two features that together create significant information for the model. <br> *SFS, mRMR, Pearson and Univariate suffer from XOR.*
+
+An important thing to note is that: any process that *learns* something from the features must be included in the traning part. If the test samples are selected after the features selection then also them are influenced.
+
+## Feature importance
+It quantifies how relevant or influential a feature is. It can support feature selection but *a rule as to be introduced*. 
+
+Decision trees have an intrinsic measure for importance. Decision trees choose the best feature based on the capability of the feature to split the samples on a node.
+The importance of a feature comes from the gain of purity to the tree.
+
+F.I. is model-specific but there are also agnostic metrics: **Permutation Feature Importance** computes the importance by making irrelevant a feature and comparing with the original dataset, obtaining the gain (or the loss) of relevance.
+
+
+
+# Feature engineering 
 Improve representation by adding knowledge or expressing data in a way that's easier to learn. 
 - An example of the first type might be to compute some ratio or index, such as the BMI. 
 - Another way to express data differetly is by introducing a new variable that represents a non-linear relationship between other variables so that the model can learn and infer better
