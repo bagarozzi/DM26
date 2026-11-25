@@ -10,3 +10,4 @@
 ## Module 3: Text-mining and NLP (G. Moro)
 1. [Pre-Transformers](./mod-3/1-pre-transformers.md)
 2. [Transformers](./mod-3/2-transformers.md)
+3. [Retrieval-Augmented Generation](./mod-3/3-rag.md) 
