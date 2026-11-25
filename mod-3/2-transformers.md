@@ -108,7 +108,8 @@ Se usassimo una matrice andiamo a *mischiare* concetti diversi e funzioni divers
 Quattro matrici sarebbero addirittura troppe o ridondanti.
 
 ### LayerNorm: Add & Norm
-La **Add** aggiunge l'input e l'output dell'attention. I suoi ruoli sono:
+La **Add** aggiunge l'input e l'output dell'attention.
+I suoi ruoli sono:
 - Rendere il **gradiente stabile**: se l'attention non impara nulla allora non rischiamo il problema del **vanishing gradient**
 - Aiuta il modello a **trattenere dettagli importanti dell'input**: evitando che l'attention sia biased
 
@@ -129,3 +130,18 @@ $
 3. Scaling e bias: $Z \cdot s + b$
 
 ## 4. Decoder
+Il decoder genera una sequenza di output, token dopo token. Per prevedere ciò usa due input:
+- l'output precedente (il **token** precedente)
+- l'**output dell'encoder**
+
+Questi due input vengono **messi in cross-attention**, questo significa che ogni parola del decoder cerca relazioni con ciò che gli manda il decoder, le più significative e correlate prodotte dall'attenzione. 
+
+<img src="cross-att.png" width="350px">
+
+Durante il training viene aggiunta una maschera in modo tale che non si basi su token futuri.
+Viene anche fatto **teacher forcing**: anche se un token è sbagliato, viene corretto così da non condizionare la generazione dei token successivi.
+
+> **What if we deleted some layers?** <br>Removing feed-forwards layers resulted in significant perfomance degradation, that's because **they are the only non-linear layers in the transformers** that enable serious learning.<br>At the same time, removing some attention layers results in only a few percentage points decrease in benchmarks.
+
+# Architectural variations
+Encoder-only (BERT) architectures are trending models for classification, information retrieval and extraction; while encoder-decoder and decoder-only (T5, BART, GPT, LLaMA) are used for code and text generation.
