@@ -141,7 +141,41 @@ Questi due input vengono **messi in cross-attention**, questo significa che ogni
 Durante il training viene aggiunta una maschera in modo tale che non si basi su token futuri.
 Viene anche fatto **teacher forcing**: anche se un token è sbagliato, viene corretto così da non condizionare la generazione dei token successivi.
 
+## 5. Decoding strategies 
+Decoding strategy defines the procedure for **selecting the next output token** based on the model’s predicted probability distribution
+
+>It's been found that changing decoding hyperparamethers drastically changes the generation's output.
+
+Two options:
+- **Deterministic**: greedy advancement, for example by choosing the token with the *greatest probability*
+- **Stochastic**: not deterministic, using an algorithm that introduces elements of *randomness*
+
+### Deterministic: Greedy
+Chooses the token with the greatest probability. It works well with relatively short outputs.
+
+### Deterministic: Beam
+Selects a token based on how good the resulting sequence could be. Does a breadth-first search that branches multiple resulting sequences possibilities, then uses a scoring funcion to choose the best result.
+
+> As humans we've always preferred **creative and less-predictable texts** and so, in open-ended text generation a stochastic model is more accurate.
+
+### Stochastic: sampling
+Taking the **top-k** words among the most likely ones and choosing one randomly. 
+
+Another option is the **top-p**: taking the tokens whose probability sum up to $p$ and choose one randomly.
+
+> $p$, $k$ are hyperparamethers toghether with $T$, that's the *temperature* that regulates the shape of the distribution. With $T > 1$ the model *is more creative*.
+
 > **What if we deleted some layers?** <br>Removing feed-forwards layers resulted in significant perfomance degradation, that's because **they are the only non-linear layers in the transformers** that enable serious learning.<br>At the same time, removing some attention layers results in only a few percentage points decrease in benchmarks.
 
 # Architectural variations
 Encoder-only (BERT) architectures are trending models for classification, information retrieval and extraction; while encoder-decoder and decoder-only (T5, BART, GPT, LLaMA) are used for code and text generation.
+
+# Fine-tuning and Pre-training
+We'll never do pre-training...
+
+Semantic parsing is translating plain text in some actions to do; the model parses a plain text, understands actions and intents and does them.
+
+There are also:
+- Self-supervised: document rotation, question and answers
+- Supervised: specific phrases, cause-effects, positional relationships, domain-specific (really difficult considering human languages)
+
